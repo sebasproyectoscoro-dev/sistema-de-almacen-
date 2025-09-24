@@ -1,0 +1,12 @@
+
+Table Categorias {
+  id int [pk, increment]
+  nombre varchar(255)
+  descripcion text
+  created_at timestamp
+  updated_at timestamp
+}
+
+
+
+
