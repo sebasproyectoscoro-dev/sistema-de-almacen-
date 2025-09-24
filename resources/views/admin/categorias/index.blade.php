@@ -20,13 +20,46 @@
                     <h3 class="card-title"><b>Categorias registrados</b></h3>
 
                     <div class="card-tools">
-                       <a   class="btn btn-primary" href="{{url('/admin/categorias/create')}}">Crear Nuevo</a>
+                        <a class="btn btn-primary" href="{{ url('/admin/categorias/create') }}">Crear Nuevo</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body" style="display: block;">
-                    The body of the card
+
+                    <table class="table table-striped table-bordered table-hover"   >
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                              @foreach (  $categorias as $categoria )
+                                <tr>
+                              <td>{{ $categoria->id }}</td>
+                                <td>{{ $categoria->nombre }}</td>
+                                <td>{{ $categoria->descripcion }}</td>
+                                <td>
+                                    <a class="btn btn-info" href="{{ url('/admin/categorias/'.$categoria->id.'/edit') }}">Editar</a>
+                                    <form action="{{ url('/admin/categorias/'.$categoria->id) }}" method="post" style="display:inline">
+                                        @csrf
+                                        {{ method_field('DELETE') }}
+                                        <input class="btn btn-danger" type="submit" onclick="return confirm('¿Quieres borrar?')" value="Borrar">
+                                    </form>
+                                </td>
+                                   </tr>
+                              @endforeach
+                           
+                        </tbody>
+
+                    </table>
+
+
+
                 </div>
                 <!-- /.card-body -->
             </div>
