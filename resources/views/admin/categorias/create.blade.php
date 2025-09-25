@@ -26,12 +26,35 @@
 
                     <form action="" method="post">
 
-                        @csrf
-                        <div class="form-group">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre"
-                                aria-describedby="helpId" placeholder="" value="{{ old('nombre') }}">
-                            <small id="helpId" class="form-text text-muted">Escribe el nombre de la categoria</small>
+                        <div class="row">
+                            <div class="cold-md-12">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" class="form-control" name="nombre" id="nombre"
+                                        placeholder="Ingrese nombre">
+                                </div>
+                            </div>
+
+
+                              <div class="cold-md-12">
+                                <div class="form-group">
+                                    <label for="nombre">Descripcion</label>
+                                 <textarea class="form-control" name="descripcion" id="descripcion" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                               <div class="form-group">
+                                
+                               </div>
+
+                            </div>
+                        </div>
+
                     </form>
 
 
