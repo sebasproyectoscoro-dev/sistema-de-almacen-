@@ -24,10 +24,10 @@
                 <!-- /.card-header -->
                 <div class="card-body" style="display: block;">
 
-                    <form action="" method="post">
-
+                    <form action="{{url('/admin/categorias/create')}}" method="post">
+                        @csrf
                         <div class="row">
-                            <div class="cold-md-12">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="nombre">Nombre</label>
                                     <input type="text" class="form-control" name="nombre" id="nombre"
@@ -36,10 +36,10 @@
                             </div>
 
 
-                              <div class="cold-md-12">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="nombre">Descripcion</label>
-                                 <textarea class="form-control" name="descripcion" id="descripcion" rows="3"></textarea>
+                                    <textarea class="form-control" name="descripcion" id="descripcion" rows="3" placeholder="Ingrese descripcion"></textarea>
                                 </div>
                             </div>
 
@@ -48,9 +48,11 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-12">
-                               <div class="form-group">
-                                
-                               </div>
+                                <div class="form-group">
+                                    <a href="{{ url('/admin/categorias') }}" class="btn btn-secondary">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+
+                                </div>
 
                             </div>
                         </div>
