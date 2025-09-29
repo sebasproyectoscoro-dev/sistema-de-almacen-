@@ -24,7 +24,7 @@
                 <!-- /.card-header -->
                 <div class="card-body" style="display: block;">
 
-                    <form action="{{url('/admin/categorias/create')}}" method="post">
+                    <form action="{{ url('/admin/categorias/create') }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -32,7 +32,16 @@
                                     <label for="nombre">Nombre</label>
                                     <input type="text" class="form-control" name="nombre" id="nombre"
                                         placeholder="Ingrese nombre">
+
+
                                 </div>
+
+                                @error('nombre')
+                                
+                                    <small style="color: red">
+                                        {{ $message }}
+                                    </small>
+                                @enderror
                             </div>
 
 
