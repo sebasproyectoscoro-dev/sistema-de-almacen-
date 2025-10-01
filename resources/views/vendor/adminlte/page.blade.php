@@ -55,18 +55,17 @@
 @section('adminlte_js')
     @stack('js')
     @yield('js')
+    
+    
+    @if (($message = Session::get('mensaje')) && ($icono = Session::get('icono')))
+        <script>
 
-
-    @if ($message = Session::get('mensaje') &&($icono = Session::get('icono')))
-          <script>
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500
-        });
-    </script>
+            Swal.fire({
+                title:"{{$message}}",
+                icon: "{{$icono}}",
+                draggable: true
+            });
+        </script>
     @endif
-  
-@stop
+    
+    @stop
