@@ -5,8 +5,8 @@
     <nav aria-label="breadcrumb" style="font-size: 15pt">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('/admin/categorias') }}">Categorias</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Listado de categorias</li>
+            <li class="breadcrumb-item"><a href="{{ url('/admin/productos') }}">Productos</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Listado de productos</li>
         </ol>
     </nav>
 @stop
@@ -17,57 +17,57 @@
         <div class="col-md-12">
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h3 class="card-title"><b>Categorias registrados</b></h3>
+                    <h3 class="card-title"><b>Productos registrados</b></h3>
 
                     <div class="card-tools">
-                        <a class="btn btn-primary" href="{{ url('/admin/categorias/create') }}">Crear Nuevo</a>
+                        <a class="btn btn-primary" href="{{ url('/admin/productos/create') }}">Crear Nuevo</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body" style="display: block;">
+                <div class="card-body  table-responsive" style="display: block;">
 
                     <table id="example1" class="table table-striped table-bordered table-hover table-sm">
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                 <th>Codigo</th>
                                 <th>Nombre</th>
+                                <th>Categoria</th>
                                 <th>Descripcion</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach ($categorias as $categoria)
+                            @foreach ($productos as $producto)
                                 <tr>
-                                    <td>{{ $categoria->id }}</td>
-                                    <td>{{ $categoria->nombre }}</td>
-                                    <td>{{ $categoria->descripcion }}</td>
+                                    <td>{{ $producto->id }}</td>
+                                    <td>{{ $producto->codigo }}</td>
+                                    <td>{{ $producto->nombre }}</td>
+                                    <td>{{ $producto->categoria->nombre }}</td>
+                                    <td>{{ $producto->descripcion }}</td>
                                     <td>
                                         <a class="btn btn-info"
-                                            href="{{ url('/admin/categorias/' . $categoria->id . '/edit') }}">Editar</a>
+                                            href="{{ url('/admin/productos/' . $producto->id . '/edit') }}">Editar</a>
 
-                                        <form id="form-borrar-{{ $categoria->id }}"
-                                            action="{{ url('/admin/categorias/' . $categoria->id) }}" method="POST"
-                                            style="display: inline;">
+
+                                        <form action="{{ url('/admin/productos/' . $producto->id) }}" method="post"
+                                            style="display:inline">
                                             @csrf
-                                            @method('DELETE')
-                                            <input type="hidden" name="accion" id="accion-{{ $categoria->id }}">
-                                            <button type="button" class="btn btn-danger"
-                                                onclick="confirmarAccion({{ $categoria->id }})">
-                                                Borrar
-                                            </button>
+                                            {{ method_field('DELETE') }}
+                                            <input class="btn btn-danger" type="submit"
+                                                onclick="return confirm('¿Quieres borrar?')" value="Borrar">
                                         </form>
 
-
-                                        <a href="{{ url('/admin/categorias/' . $categoria->id) }}">
-                                            <button type="button" class="btn btn-success">
-                                                <i class="fas fa-eye"></i> Ver
-
-                                            </button>
+                                        <a href="{{ url('/admin/productos/' . $producto->id) }}">
+                                        <button type="button" class="btn btn-success">
+                                            <i class="fas fa-eye"></i> Ver
+                                            
+                                        </button>
                                         </a>
-
-
+                                        
+                                        
                                     </td>
                                 </tr>
                             @endforeach
@@ -208,31 +208,5 @@
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });
-
-
-
-        function confirmarAccion(id) {
-            Swal.fire({
-                title: '¿Qué deseas hacer con esta categoría?',
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: 'Eliminar',
-                denyButtonText: 'Cambiar estado',
-                cancelButtonText: 'Cancelar',
-                icon: 'question'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Elegido: Eliminar
-                    document.getElementById('accion-' + id).value = 'eliminar';
-                    document.getElementById('form-borrar-' + id).submit();
-                } else if (result.isDenied) {
-                    // Elegido: Cambiar estado
-                    document.getElementById('accion-' + id).value = 'cambiar_estado';
-                    document.getElementById('form-borrar-' + id).submit();
-                }
-                // Cancelado: no hacer nada
-            });
-        }
     </script>
-
 @stop

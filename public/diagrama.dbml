@@ -1,12 +1,239 @@
-
-Table Categorias {
-  id int [pk, increment]
-  nombre varchar(255)
-  descripcion text
-  created_at timestamp
-  updated_at timestamp
+Table cache {
+  key varchar(191) [pk]
+  value mediumtext
+  expiration int
 }
 
+Table cache_locks {
+  key varchar(191) [pk]
+  owner varchar(191)
+  expiration int
+}
 
+Table caracteristicas {
+  id bigint [pk, increment]
+  nombre varchar(60)
+  descripcion varchar(255)
+  estado tinyint
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
 
+Table categorias {
+  id bigint [pk, increment]
+  caracteristica_id bigint [unique]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
 
+Table categoria_producto {
+  id bigint [pk, increment]
+  producto_id bigint
+  categoria_id bigint
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table compras {
+  id bigint [pk, increment]
+  fecha_hora datetime
+  impuesto decimal(8,2)
+  numero_comprobante varchar(255)
+  total decimal(8,2)
+  estado tinyint
+  comprobante_id bigint [null]
+  proveedore_id bigint [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table compra_producto {
+  id bigint [pk, increment]
+  compra_id bigint
+  producto_id bigint
+  cantidad int
+  precio_compra decimal(10,2)
+  precio_venta decimal(10,2)
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table comprobantes {
+  id bigint [pk, increment]
+  tipo_comprobante varchar(50)
+  estado tinyint
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table documentos {
+  id bigint [pk, increment]
+  tipo_documento varchar(30)
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table failed_jobs {
+  id bigint [pk, increment]
+  uuid varchar(191) [unique]
+  connection text
+  queue text
+  payload longtext
+  exception longtext
+  failed_at timestamp
+}
+
+Table job_batches {
+  id varchar(191) [pk]
+  name varchar(191)
+  total_jobs int
+  pending_jobs int
+  failed_jobs int
+  failed_job_ids longtext
+  options mediumtext [null]
+  cancelled_at int [null]
+  created_at int
+  finished_at int [null]
+}
+
+Table jobs {
+  id bigint [pk, increment]
+  queue varchar(191)
+  payload longtext
+  attempts tinyint
+  reserved_at int [null]
+  available_at int
+  created_at int
+}
+
+Table marcas {
+  id bigint [pk, increment]
+  caracteristica_id bigint [unique]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table migrations {
+  id int [pk, increment]
+  migration varchar(191)
+  batch int
+}
+
+Table model_has_permissions {
+  permission_id bigint [pk]
+  model_type varchar(191) [pk]
+  model_id bigint [pk]
+}
+
+Table model_has_roles {
+  role_id bigint [pk]
+  model_type varchar(191) [pk]
+  model_id bigint [pk]
+}
+
+Table password_reset_tokens {
+  email varchar(191) [pk]
+  token varchar(191)
+  created_at timestamp [null]
+}
+
+Table permissions {
+  id bigint [pk, increment]
+  name varchar(191)
+  guard_name varchar(50)
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table personas {
+  id bigint [pk, increment]
+  razon_social varchar(80)
+  direccion varchar(80)
+  tipo_persona varchar(20)
+  estado tinyint
+  documento_id bigint
+  numero_documento varchar(20)
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table presentaciones {
+  id bigint [pk, increment]
+  caracteristica_id bigint [unique]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table productos {
+  id bigint [pk, increment]
+  codigo varchar(50)
+  nombre varchar(80)
+  stock int
+  descripcion varchar(255) [null]
+  fecha_vencimiento date [null]
+  img_path varchar(2048) [null]
+  estado tinyint
+  marca_id bigint
+  presentacione_id bigint
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table proveedores {
+  id bigint [pk, increment]
+  persona_id bigint [unique]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table role_has_permissions {
+  permission_id bigint [pk]
+  role_id bigint [pk]
+}
+
+Table roles {
+  id bigint [pk, increment]
+  name varchar(191)
+  guard_name varchar(50)
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table sessions {
+  id varchar(191) [pk]
+  user_id bigint [null]
+  ip_address varchar(45) [null]
+  user_agent text [null]
+  payload longtext
+  last_activity int
+}
+
+Table users {
+  id bigint [pk, increment]
+  name varchar(191)
+  email varchar(191) [unique]
+  email_verified_at timestamp [null]
+  password varchar(191)
+  remember_token varchar(100) [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+// Relaciones (FK)
+Ref: categoria_producto.categoria_id > categorias.id
+Ref: categoria_producto.producto_id > productos.id
+Ref: categorias.caracteristica_id > caracteristicas.id
+Ref: compra_producto.compra_id > compras.id
+Ref: compra_producto.producto_id > productos.id
+Ref: compras.comprobante_id > comprobantes.id
+Ref: compras.proveedore_id > proveedores.id
+Ref: marcas.caracteristica_id > caracteristicas.id
+Ref: model_has_permissions.permission_id > permissions.id
+Ref: model_has_roles.role_id > roles.id
+Ref: personas.documento_id > documentos.id
+Ref: presentaciones.caracteristica_id > caracteristicas.id
+Ref: productos.marca_id > marcas.id
+Ref: productos.presentacione_id > presentaciones.id
+Ref: proveedores.persona_id > personas.id
+Ref: role_has_permissions.permission_id > permissions.id
+Ref: role_has_permissions.role_id > roles.id
