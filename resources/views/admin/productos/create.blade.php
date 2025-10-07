@@ -24,7 +24,7 @@
                 <!-- /.card-header -->
                 <div class="card-body" style="display: block;">
 
-                    <form action="{{ url('/admin/productos/create') }}" method="post">
+                    <form action="{{ url('/admin/productos/create') }}" method="post" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row">
@@ -220,13 +220,13 @@
                                             <div class="input-group- mb-3">
                                                 <select class="form-control" name="unidad_medida" id="unidad_medida">
                                                     <option value="">Seleccione medidas</option>
-                                                    <option value="unidad">Unidad</option>
-                                                    <option value="litro">Litro</option>
-                                                    <option value="kilogramo">Kilogramo</option>
-                                                    <option value="metro">Metro</option>
-                                                    <option value="paquete">Paquete</option>
-                                                    <option value="caja">Caja</option>
-                                                    <option value="otro">Otro</option>
+                                                    <option value="unidad"  {{ old('unidad_medida') == 'unidad' ? 'selected' : '' }}>Unidad</option>
+                                                    <option value="litro"  {{ old('unidad_medida') == 'litro' ? 'selected' : '' }}>Litro</option>
+                                                    <option value="kilogramo"  {{ old('unidad_medida') == 'kilogramo' ? 'selected' : '' }}>Kilogramo</option>
+                                                    <option value="metro"  {{ old('unidad_medida') == 'metro' ? 'selected' : '' }}>Metro</option>
+                                                    <option value="paquete"  {{ old('unidad_medida') == 'paquete' ? 'selected' : '' }}>Paquete</option>
+                                                    <option value="caja"  {{ old('unidad_medida') == 'caja' ? 'selected' : '' }}>Caja</option>
+                                                    <option value="otro"  {{ old('unidad_medida') == 'otro' ? 'selected' : '' }}>Otro</option>
                                                 </select>
                                             </div>
                                             @error('unidad_medida')
@@ -239,7 +239,7 @@
 
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label for="estado"> Unidad medida </label>
+                                            <label for="estado"> Estado </label>
                                             <div class="input-group- mb-3">
                                                 <select class="form-control" name="estado" id="estado" required>
                                                     <option value="">Seleccione medidas</option>
@@ -273,7 +273,7 @@
                                             </div>
                                             <div class="input-group mb-3">
                                                 <input type="file" class="form-control" name="imagen" id="imagen"
-                                                    accept="image/*" onchange="previewSelectedImage(event)" required>
+                                                    accept="image/*" onchange="previewSelectedImage(event)" >
                                                     <script>
                                                         function previewSelectedImage(event) {
                                                             const input = event.target;

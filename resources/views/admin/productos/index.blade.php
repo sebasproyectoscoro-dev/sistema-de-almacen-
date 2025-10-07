@@ -35,6 +35,7 @@
                                 <th>Nombre</th>
                                 <th>Categoria</th>
                                 <th>Descripcion</th>
+                                <th>Imagen</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -45,8 +46,18 @@
                                     <td>{{ $producto->id }}</td>
                                     <td>{{ $producto->codigo }}</td>
                                     <td>{{ $producto->nombre }}</td>
+                                    <td>
+                                        @if ($producto->imagen)
+                                            <img src="{{ asset('storage') . '/' . $producto->imagen }}" alt="Imagen del producto"
+                                                style="max-width: 50px; max-height: 50px;">
+                                            
+                                        @else
+                                         <span class="text-muted">No existe imagen</span>
+                                            
+                                        @endif
+                                    </td>
                                     <td>{{ $producto->categoria->nombre }}</td>
-                                    <td>{{ $producto->descripcion }}</td>
+                                    <td>{!! $producto->descripcion !!}</td>
                                     <td>
                                         <a class="btn btn-info"
                                             href="{{ url('/admin/productos/' . $producto->id . '/edit') }}">Editar</a>
