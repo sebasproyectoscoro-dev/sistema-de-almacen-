@@ -80,25 +80,64 @@ class ProductoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Producto $producto)
+    public function show($id)
     {
-        //
+        $producto = Producto::with('categoria')->findOrFail($id)    ;
+        return view('admin.productos.show', compact('producto'));   
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Producto $producto)
+    public function edit($id)
     {
-        //
+        $categorias = Categoria::all();
+        $producto = Producto::findOrFail($id);
+        return view('admin.productos.edit', compact('producto', 'categorias'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request,  $id)
     {
-        //
+        return response()->json($request->all());
+
+          $request->validate([
+        'idcategoria' => 'required|exists:categorias,id',
+        'codigo'       => 'required|unique:productos,codigo,' . $id,  // se usa para q obie el prodcuto con el id dado, porque sino no lo deja actualizar xq entorara ese idf
+        'nombre'       => 'required|string|max:255',
+        'descripcion'  => 'required|string',
+        'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'precio_compra'=> 'required|numeric',
+        'precio_venta' => 'required|numeric',
+        'stock_minimo' => 'required|integer',
+        'stock_maximo' => 'required|integer',
+        'unidad_medida'=> 'required|string',
+        'estado'       => 'required|boolean',
+    ]);
+
+    // Crear un nuevo producto
+    $producto = new Producto();
+    $producto->idcategoria  = $request->idcategoria;
+    $producto->codigo        = $request->codigo;
+    $producto->nombre        = $request->nombre;
+    $producto->descripcion   = $request->descripcion;
+
+    // Guardar imagen en storage/app/public/imagenes/productos
+    if ($request->hasFile('imagen')) {
+        $producto->imagen = $request->file('imagen')->store('imagenes/productos', 'public');
+    }
+
+    $producto->precio_compra = $request->precio_compra;
+    $producto->precio_venta  = $request->precio_venta;
+    $producto->stock_minimo  = $request->stock_minimo;
+    $producto->stock_maximo  = $request->stock_maximo;
+    $producto->unidad_medida = $request->unidad_medida;
+    $producto->estado        = $request->estado;
+
+    $producto->save();
     }
 
     /**

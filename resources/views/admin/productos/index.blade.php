@@ -33,9 +33,10 @@
                                 <th>Id</th>
                                  <th>Codigo</th>
                                 <th>Nombre</th>
+                                 <th>Serial</th>
+                                <th>Imagen</th>
                                 <th>Categoria</th>
                                 <th>Descripcion</th>
-                                <th>Imagen</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -46,6 +47,7 @@
                                     <td>{{ $producto->id }}</td>
                                     <td>{{ $producto->codigo }}</td>
                                     <td>{{ $producto->nombre }}</td>
+                                     <td>003435354SNDF</td>
                                     <td>
                                         @if ($producto->imagen)
                                             <img src="{{ asset('storage') . '/' . $producto->imagen }}" alt="Imagen del producto"
