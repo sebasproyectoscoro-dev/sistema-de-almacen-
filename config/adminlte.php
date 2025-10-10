@@ -298,33 +298,78 @@ return [
     |
     */
 
-    'menu' => [
-        // Navbar items:
-     
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
-
-        // Sidebar items:
-      
-      
-        ['header' => 'Menu'],
-        [
-            'text' => 'Categorias',
-            'url' => 'admin/categorias',
-            'icon' => 'fas fa-fw fa-user',
-         'classes' => 'bg-blue text-white',
-        ],
-        [
-            'text' => 'Productos',
-            'url' => 'admin/productos',
-            'icon' => 'fas fa-fw fa-user',
-         'classes' => 'bg-blue text-white',
-        ],
-       
-       
+'menu' => [
+    // 🔹 Navbar (parte superior)
+    [
+        'type' => 'fullscreen-widget',
+        'topnav_right' => true,
     ],
+
+    // 🔹 Encabezado del sidebar
+    ['header' => 'Menú Principal', 'classes' => 'text-uppercase text-light mt-2 mb-1'],
+
+    // 🔹 Secciones principales
+    [
+        'text' => 'Categorías',
+        'url'  => 'admin/categorias',
+        'icon' => 'fas fa-layer-group',
+        'classes' => 'text-white',
+        'icon_color' => 'lightblue',
+    ],
+    [
+        'text' => 'Productos',
+        'url'  => 'admin/productos',
+        'icon' => 'fas fa-box-open',
+        'classes' => 'text-white',
+        'icon_color' => 'lightblue',
+    ],
+    [
+        'text' => 'Ambientes',
+        'url'  => 'admin/ambientes',
+        'icon' => 'fas fa-home',
+        'classes' => 'text-white',
+        'icon_color' => 'lightblue',
+    ],
+
+    // 🔹 Nueva sección: Proveedores
+    [
+        'text' => 'Proveedores',
+        'url'  => 'admin/proveedores',
+        'icon' => 'fas fa-truck',
+        'classes' => 'text-white',
+        'icon_color' => 'lightblue',
+    ],
+
+    [
+        'text' => 'Conjunto ',
+        'url'  => 'admin/proveedores',
+        'icon' => 'fas fa-truck',
+        'classes' => 'text-white',
+        'icon_color' => 'lightblue',
+    ],
+
+    // 🔹 Nueva sección: Conjunto / Asignaciones (con submenú)
+    [
+        'text' => ' Asignaciones',
+        'icon' => 'fas fa-object-group',
+        'classes' => 'text-white',
+        'icon_color' => 'lightblue',
+        'submenu' => [
+            [
+                'text' => 'Ver Asignaciones',
+                'url'  => 'admin/asignaciones/show/1',
+                'icon' => 'fas fa-list',
+                'icon_color' => 'lightblue',
+            ],
+            [
+                'text' => 'Nuevo Asginacion',
+                'url'  => 'admin/asignaciones/create',
+                'icon' => 'fas fa-plus-circle',
+                'icon_color' => 'lightblue',
+            ],
+        ],
+    ],
+],
 
     /*
     |--------------------------------------------------------------------------

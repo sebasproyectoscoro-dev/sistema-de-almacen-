@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('asignacion_equipos', function (Blueprint $table) {
-        $table->id();
-       $table->foreignId('id_conjunto')->nullable()->constrained('conjunto_equipos')->nullOnDelete();
-    $table->foreignId('id_equipo')->nullable()->constrained('productos')->nullOnDelete();
-    $table->foreignId('id_ambiente')->constrained('ambientes');
-    $table->foreignId('id_responsable')->nullable()->constrained('personas');
-    $table->foreignId('id_encargado')->nullable()->constrained('personas');
+            $table->id();
+            $table->foreignId('id_conjunto')->nullable()->constrained('conjunto_equipos')->nullOnDelete();
+            $table->foreignId('id_equipo')->nullable()->constrained('productos')->nullOnDelete();
+            $table->foreignId('id_ambiente')->constrained('ambientes');
+            $table->foreignId('id_responsable')->nullable()->constrained('personas');
+            $table->foreignId('id_encargado')->nullable()->constrained('personas');
 
-        $table->date('fecha_asignacion');
-        $table->text('observaciones')->nullable();
+            $table->date('fecha_asignacion');
+            $table->text('observaciones')->nullable();
 
 
             $table->timestamps();

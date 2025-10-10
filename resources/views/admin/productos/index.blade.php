@@ -37,6 +37,7 @@
                                 <th>Imagen</th>
                                 <th>Categoria</th>
                                 <th>Descripcion</th>
+                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -60,18 +61,35 @@
                                     </td>
                                     <td>{{ $producto->categoria->nombre }}</td>
                                     <td>{!! $producto->descripcion !!}</td>
+                <td>
+    @if ($producto->estado == 1)
+        <span class="badge bg-success">
+            <i class="fas fa-check-circle"></i> Activo
+        </span>
+    @else
+        <span class="badge bg-danger">
+            <i class="fas fa-times-circle"></i> Inactivo
+        </span>
+    @endif
+</td>
+
                                     <td>
                                         <a class="btn btn-info"
                                             href="{{ url('/admin/productos/' . $producto->id . '/edit') }}">Editar</a>
 
 
-                                        <form action="{{ url('/admin/productos/' . $producto->id) }}" method="post"
-                                            style="display:inline">
+                                        <form id="form-borrar-{{ $producto->id }}"
+                                            action="{{ url('/admin/productos/' . $producto->id) }}" method="POST"
+                                            style="display: inline;">
                                             @csrf
-                                            {{ method_field('DELETE') }}
-                                            <input class="btn btn-danger" type="submit"
-                                                onclick="return confirm('¿Quieres borrar?')" value="Borrar">
+                                            @method('DELETE')
+                                            <input type="hidden" name="accion" id="accion-{{ $producto->id }}">
+                                            <button type="button" class="btn btn-danger"
+                                                onclick="confirmarAccion({{ $producto->id }}, {{ $producto->estado }})">
+                                                Borrar
+                                            </button>
                                         </form>
+
 
                                         <a href="{{ url('/admin/productos/' . $producto->id) }}">
                                         <button type="button" class="btn btn-success">
@@ -221,5 +239,42 @@
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });
+
+
+
+
+    
+
+function confirmarAccion(id, estado) {
+    // Configurar texto y color según el estado actual
+    let textoAccion = (estado == 1) ? 'Inactivar' : 'Activar';
+    let colorAccion = (estado == 1) ? '#d33' : '#28a745'; // rojo si activo, verde si inactivo
+
+    Swal.fire({
+        title: '¿Qué deseas hacer con este producto?',
+        icon: 'question',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        denyButtonText: textoAccion,
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6', // azul para eliminar
+        denyButtonColor: colorAccion,  // cambia según el estado
+        cancelButtonColor: '#6c757d',  // gris
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Acción: Eliminar
+            document.getElementById('accion-' + id).value = 'eliminar';
+            document.getElementById('form-borrar-' + id).submit();
+        } else if (result.isDenied) {
+            // Acción: Activar o Inactivar
+            document.getElementById('accion-' + id).value = 'cambiar_estado';
+            document.getElementById('form-borrar-' + id).submit();
+        }
+    });
+}
+
+
+
     </script>
 @stop

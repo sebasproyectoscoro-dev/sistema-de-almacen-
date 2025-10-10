@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Producto;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -102,7 +103,7 @@ class ProductoController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        return response()->json($request->all());
+       
 
           $request->validate([
         'idcategoria' => 'required|exists:categorias,id',
@@ -119,7 +120,7 @@ class ProductoController extends Controller
     ]);
 
     // Crear un nuevo producto
-    $producto = new Producto();
+    $producto = Producto::findOrFail($id);
     $producto->idcategoria  = $request->idcategoria;
     $producto->codigo        = $request->codigo;
     $producto->nombre        = $request->nombre;
@@ -127,6 +128,8 @@ class ProductoController extends Controller
 
     // Guardar imagen en storage/app/public/imagenes/productos
     if ($request->hasFile('imagen')) {
+
+        Storage::disk('public')->delete($producto->imagen); // Eliminar la imagen anterior si existe
         $producto->imagen = $request->file('imagen')->store('imagenes/productos', 'public');
     }
 
@@ -138,13 +141,67 @@ class ProductoController extends Controller
     $producto->estado        = $request->estado;
 
     $producto->save();
+    return redirect()
+        ->route('productos.index')
+        ->with('mensaje', 'Producto actualizado exitosamente')
+        ->with('icono', 'success');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Producto $producto)
+    public function destroy($id, Request $request)
     {
-        //
+        $producto = Producto::findOrFail($id);
+
+    if ($request->accion === 'cambiar_estado') {
+
+          $producto->estado = $producto->estado == 1 ? 0 : 1;
+          $producto->save();
+        
+
+        return redirect()->route('productos.index')
+            ->with('mensaje', 'Se cambio de estado exitosamente.')
+            ->with('icono', 'info');
     }
+
+    // Acción por defecto: eliminar
+    
+    $producto->delete();
+
+    return redirect()->route('productos.index')
+        ->with('mensaje', 'Categoría eliminada exitosamente.')
+        ->with('icono', 'success');
+
+    }
+
+
+      public function buscar(Request $request)
+{
+    $term = $request->get('term');
+
+    $productos = Producto::where('codigo', 'LIKE', "%{$term}%")
+        ->orWhere('nombre', 'LIKE', "%{$term}%")
+        ->take(10)
+        ->get(['id', 'codigo', 'nombre', 'descripcion', 'precio_compra', 'precio_venta']);
+
+    $data = [];
+
+    foreach ($productos as $producto) {
+        $data[] = [
+            'label' => $producto->codigo . ' — ' . $producto->nombre,
+            'value' => $producto->codigo,
+            'data' => [
+                'codigo' => $producto->codigo,
+                'nombre' => $producto->nombre,
+                'marca' => 'Sin marca', // ← valor simulado
+                'serie' => 'S/N',       // ← valor simulado
+                'descripcion' => $producto->descripcion,
+            ]
+        ];
+    }
+
+    return response()->json($data);
+}
+
 }

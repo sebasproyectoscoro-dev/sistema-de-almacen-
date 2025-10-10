@@ -224,7 +224,7 @@
                                 <label for="imagen">Imagen del producto</label>
                                 <div class="input-group mb-3">
                                     <img style="width:100%; border:1px solid #ccc; border-radius:8px"
-                                        src="{{ $producto->imagen ? asset('images/productos/' . $producto->imagen) : asset('images/productos/default.png') }}"
+                                        src="{{ asset('storage') . '/' . $producto->imagen }}"
                                         alt="Imagen del producto" id="previewImage">
                                 </div>
                                 <div class="input-group mb-3">

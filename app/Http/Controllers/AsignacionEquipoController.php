@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AsignacionEquipo;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class AsignacionEquipoController extends Controller
@@ -20,7 +21,7 @@ class AsignacionEquipoController extends Controller
      */
     public function create()
     {
-        //
+       return view('admin.asignaciones.create');
     }
 
     /**
@@ -34,9 +35,9 @@ class AsignacionEquipoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AsignacionEquipo $asignacionEquipo)
+    public function show( $asignacionEquipo)
     {
-        //
+        return view('admin.asignaciones.show', compact('asignacionEquipo'));
     }
 
     /**
@@ -62,4 +63,6 @@ class AsignacionEquipoController extends Controller
     {
         //
     }
+
+  
 }
