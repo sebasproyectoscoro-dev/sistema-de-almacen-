@@ -44,3 +44,22 @@ Route::get('/admin/asignaciones/{id}', [App\Http\Controllers\AsignacionEquipoCon
 Route::get('/admin/asignaciones/{id}/edit', [App\Http\Controllers\AsignacionEquipoController::class, 'edit'])->name('asignaciones.edit')->middleware('auth');
 Route::put('/admin/asignaciones/{id}', [App\Http\Controllers\AsignacionEquipoController::class, 'update'])->  name('asignaciones.update')->middleware('auth');
 Route::delete('/admin/asignaciones/{id}', [App\Http\Controllers\AsignacionEquipoController::class, 'destroy'])->name('asignaciones.destroy')->middleware('auth');
+
+//rutas para ambirntes
+
+Route::get('/admin/ambientes', [App\Http\Controllers\AmbienteController::class, 'index'])->name('ambientes.index')->middleware('auth');
+Route::get('/admin/ambientes/create', [App\Http\Controllers\AmbienteController::class, 'create'])->name('ambientes.create')->middleware('auth');
+Route::post('/admin/ambientes/create', [App\Http\Controllers\AmbienteController::class, 'store'])->name('ambientes.store')->middleware('auth');
+Route::get('/admin/ambientes/{id}', [App\Http\Controllers\AmbienteController::class, 'show'])->name('ambientes.show')->middleware('auth');
+Route::get('/admin/ambientes/{id}/edit', [App\Http\Controllers\AmbienteController::class, 'edit'])->name('ambientes.edit')->middleware('auth');
+Route::put('/admin/ambientes/{id}', [App\Http\Controllers\AmbienteController::class, 'update'])->  name('ambientes.update')->middleware('auth');
+Route::delete('/admin/ambientes/{id}', [App\Http\Controllers\AmbienteController::class, 'destroy'])->name('ambientes.destroy')->middleware('auth'); 
+
+//rutas para conjunto 
+Route::get('/admin/conjuntos', [App\Http\Controllers\ConjuntoEquipoController::class, 'index'])->name('conjuntos.index')->middleware('auth');
+Route::get('/admin/conjuntos/create', [App\Http\Controllers\ConjuntoEquipoController::class, 'create'])->name('conjuntos.create')->middleware('auth');
+Route::post('/admin/conjuntos/create', [App\Http\Controllers\ConjuntoEquipoController::class, 'store'])->name('conjuntos.store')->middleware('auth');
+Route::get('/admin/conjuntos/{id}', [App\Http\Controllers\ConjuntoEquipoController::class, 'show'])->name('conjuntos.show')->middleware('auth');
+Route::get('/admin/conjuntos/{id}/edit', [App\Http\Controllers\ConjuntoEquipoController::class, 'edit'])->name('conjuntos.edit')->middleware('auth');
+Route::put('/admin/conjuntos/{id}', [App\Http\Controllers\ConjuntoEquipoController::class, 'update'])->  name('conjuntos.update')->middleware('auth');
+Route::delete('/admin/conjuntos/{id}', [App\Http\Controllers\ConjuntoEquipoController::class, 'destroy'])->name('conjuntos.destroy')->middleware('auth'); 

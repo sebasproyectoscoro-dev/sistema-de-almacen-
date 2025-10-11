@@ -3,9 +3,14 @@
 @section('title', 'Nueva Asignación')
 
 @section('content_header')
-    <h1 class="text-primary"><i class="fas fa-tasks"></i> Nueva Asignación de Equipos</h1>
+    <nav aria-label="breadcrumb" style="font-size: 15pt">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url('/admin/asignaciones') }}">Asignaciones</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Nueva asignacion de equipos</li>
+        </ol>
+    </nav>
 @stop
-
 @section('content')
 <div class="container mt-3">
   <div class="card card-navy shadow">

@@ -8,58 +8,92 @@ use Illuminate\Http\Request;
 class AmbienteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar lista de ambientes.
      */
     public function index()
     {
-        //
+        $ambientes = Ambiente::all();
+        return view('admin.ambientes.index', compact('ambientes'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostrar formulario de creación.
      */
     public function create()
     {
-        //
+        return view('admin.ambientes.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar nuevo ambiente.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'tipo_ambiente' => 'required|string|max:100',
+            'descripcion' => 'nullable|string',
+        ]);
+
+        $ambiente = new Ambiente();
+        $ambiente->nombre = $request->nombre;
+        $ambiente->tipo_ambiente = $request->tipo_ambiente;
+        $ambiente->descripcion = $request->descripcion;
+        $ambiente->save();
+
+        return redirect('/admin/ambientes')
+            ->with('success', 'Ambiente creado correctamente.');
     }
 
     /**
-     * Display the specified resource.
+     * Mostrar detalles de un ambiente.
      */
-    public function show(Ambiente $ambiente)
+    public function show($id)
     {
-        //
+        $ambiente = Ambiente::findOrFail($id);
+    
+        return view('admin.ambientes.show', compact('ambiente'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mostrar formulario de edición.
      */
-    public function edit(Ambiente $ambiente)
+    public function edit($id)
     {
-        //
+
+        $ambiente = Ambiente::findOrFail($id);
+        return view('admin.ambientes.edit', compact('ambiente'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar un ambiente.
      */
     public function update(Request $request, Ambiente $ambiente)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'tipo_ambiente' => 'required|string|max:100',
+            'descripcion' => 'nullable|string',
+        ]);
+
+        $ambiente->update([
+            'nombre' => $request->nombre,
+            'tipo_ambiente' => $request->tipo_ambiente,
+            'descripcion' => $request->descripcion,
+        ]);
+
+        return redirect('/admin/ambientes')
+            ->with('success', 'Ambiente actualizado correctamente.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar un ambiente.
      */
     public function destroy(Ambiente $ambiente)
     {
-        //
+        $ambiente->delete();
+
+        return redirect('/admin/ambientes')
+            ->with('success', 'Ambiente eliminado correctamente.');
     }
 }

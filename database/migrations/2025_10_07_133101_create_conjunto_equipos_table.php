@@ -15,7 +15,6 @@ return new class extends Migration
     $table->id(); // crea columna 'id' como PRIMARY KEY
     $table->string('nombre_conjunto', 100);
     $table->text('descripcion')->nullable();
-    $table->date('fecha_creacion')->nullable();
     $table->timestamps();
 });
     }

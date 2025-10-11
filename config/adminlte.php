@@ -340,13 +340,14 @@ return [
         'icon_color' => 'lightblue',
     ],
 
-    [
-        'text' => 'Conjunto ',
-        'url'  => 'admin/proveedores',
-        'icon' => 'fas fa-truck',
-        'classes' => 'text-white',
-        'icon_color' => 'lightblue',
-    ],
+   [
+    'text' => 'Conjuntos',
+    'url'  => 'admin/conjuntos',
+    'icon' => 'fas fa-cubes', // Ícono sugerido (representa conjuntos o grupos)
+    'classes' => 'text-white',
+    'icon_color' => 'lightblue',
+],
+
 
     // 🔹 Nueva sección: Conjunto / Asignaciones (con submenú)
     [
@@ -357,7 +358,7 @@ return [
         'submenu' => [
             [
                 'text' => 'Ver Asignaciones',
-                'url'  => 'admin/asignaciones/show/1',
+                'url'  => 'admin/asignaciones/1',
                 'icon' => 'fas fa-list',
                 'icon_color' => 'lightblue',
             ],

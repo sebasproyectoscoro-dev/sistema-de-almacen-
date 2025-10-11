@@ -8,58 +8,84 @@ use Illuminate\Http\Request;
 class ConjuntoEquipoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar todos los conjuntos registrados.
      */
     public function index()
     {
-        //
+        $conjuntos = ConjuntoEquipo::all();
+        return view('admin.conjuntos.index', compact('conjuntos'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostrar formulario de creación de conjunto.
      */
     public function create()
     {
-        //
+        return view('admin.conjuntos.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar un nuevo conjunto en la base de datos.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre_conjunto' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+        ]);
+
+        $conjunto = new ConjuntoEquipo();
+        $conjunto->nombre_conjunto = $request->nombre_conjunto;
+        $conjunto->descripcion = $request->descripcion;
+        $conjunto->save();
+
+        return redirect()->route('conjuntos.index')
+            ->with('mensaje', 'Conjunto creado correctamente.')->with('icono', 'success');
     }
 
     /**
-     * Display the specified resource.
+     * Mostrar los detalles de un conjunto.
      */
     public function show(ConjuntoEquipo $conjuntoEquipo)
     {
-        //
+        return view('admin.conjuntos.show', compact('conjuntoEquipo'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mostrar formulario de edición de un conjunto.
      */
     public function edit(ConjuntoEquipo $conjuntoEquipo)
     {
-        //
+        return view('admin.conjuntos.edit', compact('conjuntoEquipo'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar los datos de un conjunto.
      */
     public function update(Request $request, ConjuntoEquipo $conjuntoEquipo)
     {
-        //
+        $request->validate([
+            'nombre_conjunto' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+        ]);
+
+        $conjuntoEquipo->update([
+            'nombre_conjunto' => $request->nombre_conjunto,
+            'descripcion' => $request->descripcion,
+        ]);
+
+           return redirect()->route('conjuntos.index')
+            ->with('mensaje', 'Conjunto creado correctamente.')->with('icono', 'success');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar un conjunto.
      */
     public function destroy(ConjuntoEquipo $conjuntoEquipo)
     {
-        //
+        $conjuntoEquipo->delete();
+
+        return redirect('/admin/conjuntos')
+            ->with('success', 'Conjunto eliminado correctamente.');
     }
 }

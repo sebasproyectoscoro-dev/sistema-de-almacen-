@@ -13,8 +13,7 @@ class ConjuntoEquipo extends Model
 
     protected $fillable = [
         'nombre_conjunto',
-        'descripcion',
-        'fecha_creacion',
+        'descripcion'
     ];
 
     // Relación con asignaciones
